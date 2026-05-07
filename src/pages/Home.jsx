@@ -4,6 +4,9 @@ function Home() {
 
   const [country, setCountry] = useState(null);
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   const destinations = [
     "Paris",
     "Tokyo",
@@ -29,6 +32,29 @@ function Home() {
       alert("Country not found");
 
     }
+  };
+
+  // Save Trip
+  const saveTrip = () => {
+
+    const tripData = {
+      ...country,
+      startDate,
+      endDate
+    };
+
+    let trips =
+      JSON.parse(localStorage.getItem("trips")) || [];
+
+    trips.push(tripData);
+
+    localStorage.setItem(
+      "trips",
+      JSON.stringify(trips)
+    );
+
+    alert("Trip Saved!");
+
   };
 
   return (
@@ -90,6 +116,8 @@ function Home() {
 
             <input
               type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
               className="border p-2 rounded-lg mt-1"
             />
 
@@ -105,6 +133,8 @@ function Home() {
 
             <input
               type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
               className="border p-2 rounded-lg mt-1"
             />
 
@@ -188,6 +218,14 @@ function Home() {
             </ul>
 
           </div>
+
+          {/* Save Trip Button */}
+          <button
+            onClick={saveTrip}
+            className="bg-green-500 text-white px-5 py-2 rounded-lg mt-6"
+          >
+            Save Trip
+          </button>
 
         </div>
 
